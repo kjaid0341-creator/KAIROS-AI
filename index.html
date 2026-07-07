@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kairos AI - Proactive Productivity Companion</title>
+  <meta name="description" content="AI-powered productivity assistant for task planning, scheduling, habit tracking, and voice-assisted completion.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Effects -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+
+  <!-- App Layout -->
+  <div class="app-container">
+    
+    <!-- Left Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="logo-section">
+        <div class="logo-icon" id="logoIcon">
+          <!-- Icon injected by JS -->
+        </div>
+        <span class="logo-text">KAIROS AI</span>
+      </div>
+
+      <nav class="nav-links">
+        <li class="nav-item active" data-tab="dashboard">
+          <a href="#">
+            <span class="nav-icon" data-icon="layout"></span>
+            Dashboard
+          </a>
+        </li>
+        <li class="nav-item" data-tab="tasks">
+          <a href="#">
+            <span class="nav-icon" data-icon="check-square"></span>
+            Task Board
+          </a>
+        </li>
+        <li class="nav-item" data-tab="agent">
+          <a href="#">
+            <span class="nav-icon" data-icon="cpu"></span>
+            AI Agent Planner
+          </a>
+        </li>
+        <li class="nav-item" data-tab="calendar">
+          <a href="#">
+            <span class="nav-icon" data-icon="calendar"></span>
+            Calendar
+          </a>
+        </li>
+        <li class="nav-item" data-tab="habits">
+          <a href="#">
+            <span class="nav-icon" data-icon="activity"></span>
+            Habits & Goals
+          </a>
+        </li>
+      </nav>
+
+      <div class="user-profile">
+        <div class="avatar" id="settingsBtn">
+          <div class="avatar-inner">SK</div>
+        </div>
+        <div class="user-info">
+          <span class="username" id="usernameDisplay">Safak Ali</span>
+          <span class="user-rank" id="streakDisplay">⚡ Level 4 Companion</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      
+      <!-- DASHBOARD TAB -->
+      <section id="dashboard" class="tab-content active">
+        <div class="view-header">
+          <div class="view-title-wrap">
+            <h1 id="welcomeMessage">Good morning, Safak</h1>
+            <p>Your AI assistant recommends focusing on high-priority deadlines today.</p>
+          </div>
+          <div class="task-actions">
+            <button class="btn-primary" id="dashboardQuickTaskBtn">
+              <span data-icon="plus"></span> Quick Task
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left Main Pane -->
+          <div class="dashboard-left">
+            <!-- Stats -->
+            <div class="stats-row">
+              <div class="card-glass stat-card">
+                <div class="stat-icon violet" id="statIconTask"></div>
+                <div class="stat-details">
+                  <span class="stat-label">Tasks Completed</span>
+                  <span class="stat-value" id="statsCompletedCount">0/0</span>
+                </div>
+              </div>
+              <div class="card-glass stat-card">
+                <div class="stat-icon cyan" id="statIconHabit"></div>
+                <div class="stat-details">
+                  <span class="stat-label">Habits Streak</span>
+                  <span class="stat-value" id="statsHabitStreak">0 Days</span>
+                </div>
+              </div>
+              <div class="card-glass stat-card">
+                <div class="stat-icon pink" id="statIconFocus"></div>
+                <div class="stat-details">
+                  <span class="stat-label">Productivity Score</span>
+                  <span class="stat-value" id="statsFocusScore">85%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Recommendations Card -->
+            <div class="card-glass ai-recommendations">
+              <h2 class="section-title">
+                <span class="sparkle-icon" data-icon="sparkles"></span>
+                Proactive AI Recommendations
+              </h2>
+              <div class="recommendations-list" id="aiRecommendationsList">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+            
+            <!-- Focus Active Task List -->
+            <div class="card-glass">
+              <h2 class="section-title" data-icon="clock">Today's Focus Tasks</h2>
+              <div id="todayFocusTaskList" class="task-list-container">
+                <!-- Injected dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar Pane -->
+          <div class="dashboard-right">
+            <!-- Pomodoro Timer -->
+            <div class="card-glass focus-widget">
+              <h2 class="section-title" style="margin-bottom: 0.5rem;">Focus Timer</h2>
+              <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem;">Deep Work Pomodoro Session</p>
+              
+              <div class="timer-circle">
+                <svg class="timer-svg" viewBox="0 0 160 160">
+                  <defs>
+                    <linearGradient id="timerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="var(--primary)" />
+                      <stop offset="100%" stop-color="var(--secondary)" />
+                    </linearGradient>
+                  </defs>
+                  <circle class="timer-bg" cx="80" cy="80" r="70"></circle>
+                  <circle class="timer-progress" id="timerProgressRing" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="timer-text-wrap">
+                  <span class="timer-time" id="timerTime">25:00</span>
+                  <span class="timer-status" id="timerStatus">FOCUS</span>
+                </div>
+              </div>
+
+              <div class="timer-controls">
+                <button class="btn-icon" id="timerPlayBtn" title="Start/Pause">
+                  <span data-icon="play"></span>
+                </button>
+                <button class="btn-icon" id="timerResetBtn" title="Reset">
+                  <span data-icon="rotate-ccw"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Cognitive Energy Breakdown -->
+            <div class="card-glass">
+              <h2 class="section-title">Cognitive Load Meter</h2>
+              <div style="display:flex; flex-direction:column; gap:1rem; margin-top: 1rem;">
+                <div>
+                  <div class="flex-between" style="font-size: 0.8rem; margin-bottom: 4px;">
+                    <span style="color:var(--text-secondary);">Today's Load</span>
+                    <span id="cognitiveLoadPercentage" style="font-weight:700; color:var(--primary);">40%</span>
+                  </div>
+                  <div style="height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow:hidden;">
+                    <div id="cognitiveLoadBar" style="width: 40%; height:100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); transition: var(--transition-smooth);"></div>
+                  </div>
+                </div>
+                <p id="cognitiveAdvice" style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4;">Your schedule is light today. Excellent day to schedule deep focus tasks requiring high attention spans!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TASK BOARD TAB -->
+      <section id="tasks" class="tab-content">
+        <div class="view-header">
+          <div class="view-title-wrap">
+            <h1>Task Workspace</h1>
+            <p>Manage, prioritize, and sort tasks with AI optimization.</p>
+          </div>
+          <div class="task-header-controls">
+            <div class="search-input-wrap">
+              <span data-icon="search"></span>
+              <input type="text" class="search-input" id="taskSearchInput" placeholder="Search tasks or categories...">
+            </div>
+            <div class="task-actions">
+              <div class="board-toggle">
+                <button class="toggle-btn active" id="kanbanToggleBtn">Kanban</button>
+                <button class="toggle-btn" id="listToggleBtn">List</button>
+              </div>
+              <button class="btn-primary" id="createTaskBtn">
+                <span data-icon="plus"></span> Add Task
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kanban Board Layout -->
+        <div class="kanban-board" id="kanbanView">
+          <div class="board-column" data-status="todo">
+            <div class="column-header">
+              <span class="column-title">
+                <span class="column-dot todo"></span> To Do
+              </span>
+              <span class="task-count" id="count-todo">0</span>
+            </div>
+            <div class="task-list-container" id="list-todo">
+              <!-- Cards dynamically inserted -->
+            </div>
+          </div>
+
+          <div class="board-column" data-status="in-progress">
+            <div class="column-header">
+              <span class="column-title">
+                <span class="column-dot progress"></span> In Progress
+              </span>
+              <span class="task-count" id="count-inprogress">0</span>
+            </div>
+            <div class="task-list-container" id="list-inprogress">
+              <!-- Cards dynamically inserted -->
+            </div>
+          </div>
+
+          <div class="board-column" data-status="done">
+            <div class="column-header">
+              <span class="column-title">
+                <span class="column-dot done"></span> Completed
+              </span>
+              <span class="task-count" id="count-done">0</span>
+            </div>
+            <div class="task-list-container" id="list-done">
+              <!-- Cards dynamically inserted -->
+            </div>
+          </div>
+        </div>
+
+        <!-- List View Layout (Hidden by default) -->
+        <div class="list-view-container" id="listView">
+          <!-- Injected dynamically -->
+        </div>
+      </section>
+
+      <!-- AI AGENT PLANNER TAB -->
+      <section id="agent" class="tab-content">
+        <div class="view-header">
+          <div class="view-title-wrap">
+            <h1>Autonomous Goal Breakdown Agent</h1>
+            <p>Input a major goal. The AI agent will break it down into milestones, tasks, and scheduling actions.</p>
+          </div>
+        </div>
+
+        <div class="agent-layout">
+          <!-- Left Control Panel -->
+          <div class="card-glass agent-input-panel">
+            <div class="agent-input-wrap">
+              <h3 class="section-title" style="margin-bottom:0.25rem;">Define Your Goal</h3>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:0.75rem;">Be specific to help the AI break it down optimally.</p>
+              <textarea class="agent-textarea" id="agentGoalInput" placeholder="Example: Plan a 3-day bootcamp project, prepare for coding interview, or design a business pitch deck. Include parameters like 'in 2 days' or 'prioritize design'."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="agentDuration">Target Timeline</label>
+              <select class="form-control" id="agentDuration">
+                <option value="1">1 Day Express</option>
+                <option value="3" selected>3 Days Standard</option>
+                <option value="7">1 Week Standard</option>
+                <option value="14">2 Weeks Long Term</option>
+              </select>
+            </div>
+
+            <button class="btn-primary" id="runAgentBtn" style="width: 100%;">
+              <span data-icon="play-circle"></span> Launch Agent Planner
+            </button>
+
+            <!-- Progress Log -->
+            <div class="agent-status-panel" id="agentStatusPanel" style="display:none;">
+              <h3 style="font-size:0.8rem; text-transform:uppercase; color:var(--text-secondary); letter-spacing:1px; margin-bottom:0.5rem;">Agent Thinking Logs</h3>
+              <div class="agent-progress-step" id="agentStep1">
+                <div class="agent-step-icon">1</div>
+                Analyzing primary goal constraints
+              </div>
+              <div class="agent-progress-step" id="agentStep2">
+                <div class="agent-step-icon">2</div>
+                Deconstructing milestones and sub-tasks
+              </div>
+              <div class="agent-progress-step" id="agentStep3">
+                <div class="agent-step-icon">3</div>
+                Estimating duration & cognitive demands
+              </div>
+              <div class="agent-progress-step" id="agentStep4">
+                <div class="agent-step-icon">4</div>
+                Assembling priority timeline graph
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Graph Output Panel -->
+          <div class="agent-graph-panel">
+            <div class="graph-viewport" id="agentGraphViewport">
+              <div id="agentWelcomeScreen" style="text-align: center; margin-top: 15%; color: var(--text-muted);">
+                <span data-icon="cpu" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 1rem;"></span>
+                <h3>AI Agent Workspace Ready</h3>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; max-width: 380px; margin-left: auto; margin-right: auto;">Input a goal on the left and start the agent. It will model task sequences, dependencies, and priorities here.</p>
+              </div>
+              
+              <!-- Timeline node elements injected here -->
+              <div id="timelineWrapper" style="display:none; position: relative;">
+                <div class="timeline-line"></div>
+                <div id="timelineNodesContainer">
+                  <!-- Nodes injected by JS -->
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-between" id="agentSyncControls" style="display:none; padding:1.25rem 0.5rem 0 0.5rem;">
+              <span style="font-size:0.85rem; color:var(--text-secondary);">Generated 5 tasks. Ready to incorporate into schedule?</span>
+              <button class="btn-primary" id="agentSyncBtn">
+                <span data-icon="check-circle-2"></span> Sync Plan to Workspace
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CALENDAR TAB -->
+      <section id="calendar" class="tab-content">
+        <div class="view-header">
+          <div class="view-title-wrap">
+            <h1>Dynamic Calendar Planner</h1>
+            <p>Visually schedule tasks, assign blocks, and run AI Auto-Schedule.</p>
+          </div>
+          <div class="calendar-actions">
+            <button class="btn-secondary" id="aiAutoScheduleBtn">
+              <span data-icon="sparkles" class="sparkle-icon"></span> AI Auto-Schedule
+            </button>
+          </div>
+        </div>
+
+        <div class="card-glass" style="padding: 1.5rem 2rem;">
+          <div class="calendar-view-header">
+            <h2 id="calendarMonthYear" class="font-mono">July 2026</h2>
+            <div class="calendar-nav">
+              <button class="btn-icon" id="prevMonthBtn" title="Previous Month">
+                <span data-icon="chevron-left"></span>
+              </button>
+              <button class="btn-secondary" id="calendarTodayBtn">Today</button>
+              <button class="btn-icon" id="nextMonthBtn" title="Next Month">
+                <span data-icon="chevron-right"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="calendar-grid" id="calendarGrid">
+            <!-- Day labels and cells dynamically generated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- HABITS TAB -->
+      <section id="habits" class="tab-content">
+        <div class="view-header">
+          <div class="view-title-wrap">
+            <h1>Habits & Consistency tracking</h1>
+            <p>Build repeating disciplines. Tracking habits helps AI evaluate daily cognitive capacity.</p>
+          </div>
+          <button class="btn-primary" id="addHabitBtn">
+            <span data-icon="plus"></span> Add Habit
+          </button>
+        </div>
+
+        <div class="habits-grid" id="habitsContainer">
+          <!-- Habit cards dynamically injected -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Voice Assistant UI -->
+    <div class="voice-assistant-orb" id="voiceOrb" title="Trigger Voice Assistant">
+      <div class="voice-orb-glow"></div>
+      <span id="voiceOrbIcon" data-icon="mic" style="color: white; width:22px; height:22px; z-index:2;"></span>
+    </div>
+
+    <div class="voice-chat-bubble" id="voiceBubble">
+      <div class="voice-bubble-header">
+        <span class="voice-title">
+          <span data-icon="sparkles" style="color: var(--secondary); width:14px; height:14px;"></span>
+          KAIROS COMPANION
+        </span>
+        <button class="modal-close" id="closeVoiceBubble" style="padding: 0;">
+          <span data-icon="x" style="width:14px; height:14px;"></span>
+        </button>
+      </div>
+      <div class="voice-transcript" id="voiceTranscript">
+        Say something like "Add task Study Algorithms tomorrow at 4 PM" or "Reset focus timer"
+      </div>
+      <div class="voice-response" id="voiceResponse">
+        <!-- Spoken text feedback -->
+      </div>
+      <div class="voice-actions" id="voiceStatusText">
+        Click the microphone orb to speak.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ADD TASK MODAL -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-container card-glass">
+      <div class="modal-header">
+        <h2 class="modal-title" id="taskModalTitle">Create Productivity Task</h2>
+        <button class="modal-close" id="closeTaskModalBtn">
+          <span data-icon="x"></span>
+        </button>
+      </div>
+      <form id="taskForm">
+        <input type="hidden" id="editTaskId">
+        
+        <div class="form-group">
+          <label for="taskTitle">Task Name</label>
+          <input type="text" class="form-control" id="taskTitle" required placeholder="e.g. Build API Endpoints">
+        </div>
+
+        <div class="form-group">
+          <label for="taskDesc">Description</label>
+          <textarea class="form-control" id="taskDesc" rows="3" placeholder="Additional details or instructions..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="taskPriority">AI Urgency / Priority</label>
+            <select class="form-control" id="taskPriority">
+              <option value="high">High priority</option>
+              <option value="medium" selected>Medium priority</option>
+              <option value="low">Low priority</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="taskCategory">Category</label>
+            <select class="form-control" id="taskCategory">
+              <option value="Work" selected>Work</option>
+              <option value="Study">Study</option>
+              <option value="Personal">Personal</option>
+              <option value="Health">Health</option>
+              <option value="Life">Life</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="taskDueDate">Deadline Date</label>
+            <input type="date" class="form-control" id="taskDueDate" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="taskDuration">Estimated Block Time</label>
+            <select class="form-control" id="taskDuration">
+              <option value="30">30 minutes</option>
+              <option value="60" selected>1 hour</option>
+              <option value="120">2 hours</option>
+              <option value="180">3 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+          <button type="button" class="btn-secondary" id="cancelTaskFormBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD HABIT MODAL -->
+  <div class="modal-overlay" id="habitModal">
+    <div class="modal-container card-glass">
+      <div class="modal-header">
+        <h2 class="modal-title">Create Positive Habit</h2>
+        <button class="modal-close" id="closeHabitModalBtn">
+          <span data-icon="x"></span>
+        </button>
+      </div>
+      <form id="habitForm">
+        <div class="form-group">
+          <label for="habitName">Habit Name</label>
+          <input type="text" class="form-control" id="habitName" required placeholder="e.g. Read 15 Pages">
+        </div>
+        
+        <div class="form-group">
+          <label for="habitCategory">Category</label>
+          <select class="form-control" id="habitCategory">
+            <option value="Study">Study / Growth</option>
+            <option value="Health" selected>Health / Fitness</option>
+            <option value="Work">Work / Coding</option>
+            <option value="Mindfulness">Mindfulness</option>
+          </select>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+          <button type="button" class="btn-secondary" id="cancelHabitFormBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Habit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-container card-glass">
+      <div class="modal-header">
+        <h2 class="modal-title">Settings & AI Configurations</h2>
+        <button class="modal-close" id="closeSettingsModalBtn">
+          <span data-icon="x"></span>
+        </button>
+      </div>
+      <form id="settingsForm">
+        <div class="form-group">
+          <label for="settingsUsername">Profile Name</label>
+          <input type="text" class="form-control" id="settingsUsername" required placeholder="Your Name">
+        </div>
+
+        <div class="form-group">
+          <label for="settingsApiKey">Gemini API Key (Optional)</label>
+          <input type="password" class="form-control" id="settingsApiKey" placeholder="AI key starting with AIzaSy...">
+          <small style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Enables live AI planning breakdowns and dynamic coaching from real Gemini models! Your key is stored strictly client-side.</small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="settingsWakeTime">Optimal Wake Time</label>
+            <input type="time" class="form-control" id="settingsWakeTime" value="07:00">
+          </div>
+          <div class="form-group">
+            <label for="settingsSleepTime">Optimal Sleep Time</label>
+            <input type="time" class="form-control" id="settingsSleepTime" value="23:00">
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
+          <button type="button" class="btn-secondary" id="cancelSettingsFormBtn">Cancel</button>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Lucide/Helper Icons Setup and Main Script Loading -->
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
