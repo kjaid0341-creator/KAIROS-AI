@@ -141,7 +141,7 @@ function renderDashboard() {
   // 4. Cognitive Load bar
   const todayTasks = tasks.filter(t => t.status !== 'done' && (t.dueDate === todayStr || t.dateScheduled === todayStr));
   const todayLoadMinutes = todayTasks.reduce((sum, t) => sum + (parseInt(t.duration) || 60), 0);
-  
+
   // Max energy limit is roughly 300 minutes (5 hours) of intense focus
   const loadPercentage = Math.min(100, Math.round((todayLoadMinutes / 300) * 100));
   const loadPercentageEl = document.getElementById('cognitiveLoadPercentage');
@@ -172,7 +172,7 @@ function renderDashboard() {
   if (focusList) {
     focusList.innerHTML = '';
     const activeTasks = tasks.filter(t => t.status !== 'done' && (t.dueDate === todayStr || t.dateScheduled === todayStr));
-    
+
     if (activeTasks.length === 0) {
       focusList.innerHTML = `
         <div style="text-align:center; padding:2rem; color:var(--text-muted); font-size:0.85rem;">
@@ -181,7 +181,7 @@ function renderDashboard() {
       `;
     } else {
       // Sort: High priority first
-      activeTasks.sort((a,b) => {
+      activeTasks.sort((a, b) => {
         const order = { high: 3, medium: 2, low: 1 };
         return order[b.priority] - order[a.priority];
       });
@@ -225,7 +225,7 @@ function renderDashboard() {
     recs.forEach(rec => {
       const item = document.createElement('div');
       item.className = 'rec-item';
-      
+
       let badgeClass = 'rec-badge';
       if (rec.type === 'warning') badgeClass += ' warning';
       else if (rec.type === 'action') badgeClass += ' action';
@@ -250,7 +250,7 @@ function renderDashboard() {
       item.querySelector('.rec-btn').addEventListener('click', (e) => {
         const action = e.target.getAttribute('data-action');
         const param = e.target.getAttribute('data-param');
-        
+
         if (action === 'schedule-task') {
           switchTab('calendar');
         } else if (action === 'start-focus') {
@@ -333,7 +333,7 @@ function toggleFocusTimer(forcePlay = null) {
         clearInterval(timerInterval);
         timerInterval = null;
         timerIsRunning = false;
-        
+
         // Mode finished alert & swap
         if (timerMode === 'focus') {
           speakOutput('Focus block complete. Take a 5-minute recovery break.');
@@ -346,7 +346,7 @@ function toggleFocusTimer(forcePlay = null) {
           timerDuration = 25 * 60;
           timerTimeLeft = 25 * 60;
         }
-        
+
         const statusEl = document.getElementById('timerStatus');
         if (statusEl) statusEl.textContent = timerMode.toUpperCase();
 
@@ -355,7 +355,7 @@ function toggleFocusTimer(forcePlay = null) {
         playSpan.setAttribute('data-icon', 'play');
         playBtn.appendChild(playSpan);
         injectIcons();
-        
+
         updateTimerDisplay();
       }
       updateTimerDisplay();
@@ -370,7 +370,7 @@ function resetFocusTimer() {
   timerMode = 'focus';
   timerDuration = 25 * 60;
   timerTimeLeft = 25 * 60;
-  
+
   const statusEl = document.getElementById('timerStatus');
   if (statusEl) statusEl.textContent = 'FOCUS';
 
@@ -566,9 +566,9 @@ function renderTasksBoardView() {
 
   // Filter tasks based on query
   const filteredTasks = tasks.filter(t => {
-    return t.title.toLowerCase().includes(filterText) || 
-           t.desc.toLowerCase().includes(filterText) ||
-           t.category.toLowerCase().includes(filterText);
+    return t.title.toLowerCase().includes(filterText) ||
+      t.desc.toLowerCase().includes(filterText) ||
+      t.category.toLowerCase().includes(filterText);
   });
 
   if (boardViewMode === 'kanban') {
@@ -598,7 +598,7 @@ function renderTasksBoardView() {
       if (!targetList) return;
 
       countsTracker[task.status]++;
-      
+
       const card = document.createElement('div');
       card.className = 'task-card';
       card.draggable = true;
@@ -938,7 +938,7 @@ async function triggerAgentPlanner() {
   try {
     // Generate AI Breakdown
     const plan = await ai.getAutonomousGoalPlan(goal, targetDays, settings.apiKey);
-    
+
     // Complete Step 4
     setCompletedStep('agentStep4');
     setTimeout(() => {
@@ -1013,7 +1013,7 @@ function syncAgentTasks() {
   });
 
   alert(`Sprint "${activeGeneratedPlan.title}" synced! added ${activeGeneratedPlan.steps.length} tasks to your workspace.`);
-  
+
   // Clear planner output state
   activeGeneratedPlan = null;
   document.getElementById('agentGoalInput').value = '';
@@ -1022,7 +1022,7 @@ function syncAgentTasks() {
   document.getElementById('agentSyncControls').style.display = 'none';
 
   onStateChange();
-  
+
   // Switch to task board view so they can see them
   switchTab('tasks');
 }
@@ -1064,7 +1064,7 @@ function setupSettings() {
 
 function openSettingsModal() {
   const settings = state.getSettings();
-  
+
   document.getElementById('settingsUsername').value = settings.username || '';
   document.getElementById('settingsApiKey').value = settings.apiKey || '';
   document.getElementById('settingsWakeTime').value = settings.wakeTime || '07:00';
